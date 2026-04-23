@@ -41,37 +41,115 @@ tqdm.pandas()
 # KAMUS NORMALISASI BAHASA INFORMAL (Banking Domain)
 # ─────────────────────────────────────────────
 NORMALIZATION_DICT = {
-    # Umum
-    "gak": "tidak", "ga": "tidak", "g": "tidak", "nggak": "tidak",
-    "ngga": "tidak", "gk": "tidak", "tdk": "tidak", "tdk": "tidak",
-    "yg": "yang", "dgn": "dengan", "utk": "untuk", "krn": "karena",
-    "jg": "juga", "sdh": "sudah", "blm": "belum", "msh": "masih",
-    "lg": "lagi", "bs": "bisa", "bgt": "banget", "bkn": "bukan",
-    "hrs": "harus", "sm": "sama", "pd": "pada", "dr": "dari",
-    "ke": "ke", "di": "di", "tp": "tapi", "tpi": "tapi",
-    "jd": "jadi", "klo": "kalau", "kl": "kalau", "kalo": "kalau",
-    "kayak": "seperti", "kaya": "seperti", "aja": "saja", "aj": "saja",
-    "deh": "", "sih": "", "loh": "", "nih": "", "dong": "",
-    "wkwk": "", "haha": "", "hehe": "", "hihi": "",
 
-    # Domain Perbankan
-    "atm": "ATM", "otp": "OTP", "pin": "PIN", "qris": "QRIS",
-    "kpr": "KPR", "tab": "tabungan", "rek": "rekening",
-    "tf": "transfer", "trx": "transaksi", "txn": "transaksi",
-    "notif": "notifikasi", "verif": "verifikasi",
-    "biometrik": "biometrik", "fingerprint": "sidik jari",
-    "login": "masuk", "logout": "keluar",
-    "down": "tidak bisa diakses", "crash": "berhenti tiba-tiba",
-    "error": "kesalahan", "bug": "kesalahan sistem",
-    "lemot": "lambat", "lelet": "lambat",
-    "mantep": "mantap", "mantul": "mantap betul",
-    "keren": "bagus", "jos": "bagus", "josss": "bagus",
-    "parah": "sangat buruk", "payah": "buruk",
+    # =========================
+    # NEGASI (SANGAT KRITIS)
+    # =========================
+    "gak": "tidak", "ga": "tidak", "g": "tidak",
+    "nggak": "tidak", "ngga": "tidak", "gk": "tidak",
+    "tdk": "tidak", "tak": "tidak",
+    "engga": "tidak", "enggak": "tidak",
+    "kagak": "tidak",
+    "gakkk": "tidak", "gakk": "tidak", "gaaa": "tidak",
 
-    # Singkatan Bahasa Gaul
-    "wktu": "waktu", "blk": "balik", "minta": "minta",
-    "tolong": "tolong", "mohon": "mohon",
-    "sdg": "sedang", "sptnya": "sepertinya",
+    # Frasa negasi penting
+    "gak bisa": "tidak bisa", "ga bisa": "tidak bisa",
+    "nggak bisa": "tidak bisa", "gabisa": "tidak bisa",
+    "gbs": "tidak bisa", "gakbisa": "tidak bisa",
+    "tdk bisa": "tidak bisa",
+    "g bisa": "tidak bisa",
+
+    # =========================
+    # KATA UMUM (SINGKATAN)
+    # =========================
+    "yg": "yang", "dgn": "dengan", "dg": "dengan",
+    "utk": "untuk", "krn": "karena", "karna": "karena",
+    "jg": "juga",
+    "sdh": "sudah", "udh": "sudah", "udah": "sudah",
+    "blm": "belum", "belom": "belum",
+    "msh": "masih", "masi": "masih",
+    "lg": "lagi", "lgi": "lagi",
+    "bs": "bisa", "bsa": "bisa",
+    "bgt": "banget",
+    "bkn": "bukan",
+    "hrs": "harus",
+    "sm": "sama",
+    "pd": "pada",
+    "dr": "dari",
+    "tp": "tapi", "tpi": "tapi",
+    "jd": "jadi",
+    "klo": "kalau", "kl": "kalau", "kalo": "kalau",
+    "kyk": "seperti", "kayak": "seperti", "kaya": "seperti",
+    "aja": "saja", "aj": "saja",
+    "biar": "agar",
+
+    # =========================
+    # PRONOMINA
+    # =========================
+    "sy": "saya", "sya": "saya",
+    "gw": "saya", "gue": "saya", "gua": "saya",
+    "aku": "saya",
+    "km": "kamu", "kmu": "kamu", "lu": "kamu", "loe": "kamu",
+    "org": "orang",
+
+    # =========================
+    # TYPO UMUM
+    # =========================
+    "aplkasi": "aplikasi", "apliksi": "aplikasi",
+    "apl": "aplikasi", "app": "aplikasi", "apps": "aplikasi",
+    "bener": "benar", "bnr": "benar",
+    "trs": "terus", "trus": "terus",
+    "smua": "semua",
+    "mngkin": "mungkin",
+    "wktu": "waktu",
+
+    # =========================
+    # DOMAIN PERBANKAN
+    # =========================
+    "rek": "rekening",
+    "tf": "transfer", "trf": "transfer",
+    "trx": "transaksi", "txn": "transaksi",
+    "notif": "notifikasi",
+    "verif": "verifikasi",
+    "login": "login",     # jangan ubah ke "masuk" (biar konsisten domain)
+    "logout": "logout",
+    "otp": "otp",
+    "pin": "pin",
+    "qris": "qris",
+    "kpr": "kpr",
+
+    # =========================
+    # CODE-MIXING (MINIMAL & AMAN)
+    # =========================
+    "failed": "gagal",
+    "success": "berhasil",
+    "retry": "coba lagi",
+    "error": "error",
+    "invalid": "tidak valid",
+    "update": "perbarui",
+    "upgrade": "perbarui",
+    "download": "unduh",
+
+    # =========================
+    # MASALAH TEKNIS (JANGAN UBAH MAKNA)
+    # =========================
+    "crash": "crash",
+    "force close": "crash",
+    "fc": "crash",
+    "freeze": "freeze",
+    "hang": "hang",
+    "lag": "lambat",
+    "lemot": "lambat",
+    "lelet": "lambat",
+    "loading": "loading",
+    "stuck": "stuck",
+
+    # =========================
+    # FILLER (AMAN DIHAPUS)
+    # =========================
+    "deh": "", "sih": "", "loh": "", "nih": "",
+    "dong": "", "kok": "",
+    "wkwk": "", "wk": "", "haha": "", "hehe": "", "hihi": ""
 }
 
 # ─────────────────────────────────────────────
