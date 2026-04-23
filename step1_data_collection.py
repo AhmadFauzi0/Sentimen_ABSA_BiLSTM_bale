@@ -29,7 +29,7 @@ if not os.path.exists(log_dir):
 # ─────────────────────────────────────────────
 # KONFIGURASI
 # ─────────────────────────────────────────────
-APP_ID        = "id.co.btn.bale"          # Package name balé by BTN di Play Store
+APP_ID        = "id.co.btn.mobilebanking.android"          # Package name balé by BTN di Play Store
 LANG          = "id"                       # Bahasa Indonesia
 COUNTRY       = "id"                       # Region Indonesia
 TOTAL_TARGET  = 20_000                     # Target minimal ulasan
