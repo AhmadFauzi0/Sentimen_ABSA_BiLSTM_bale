@@ -89,15 +89,16 @@ class BiLSTMConfig:
 
     # ── BiLSTM Hyperparameter ─────────────────
     bilstm_hidden: int   = 256    # Hidden size per arah (total = 2×256 = 512)
-    bilstm_layers: int   = 2      # Jumlah layer stacked BiLSTM
+    bilstm_layers: int   = 1      # Jumlah layer stacked BiLSTM
     bilstm_dropout: float = 0.3   # Dropout antar layer BiLSTM
 
     # ── Training ─────────────────────────────
     batch_size: int      = 32     # Lebih kecil karena BiLSTM tambah memori
     learning_rate_bert: float = 2e-5   # LR untuk layer BERT (lebih kecil)
-    learning_rate_bilstm: float = 5e-4 # LR untuk BiLSTM & head (lebih besar)
-    num_epochs: int      = 10      # Lebih banyak epoch karena model lebih kompleks
-    warmup_ratio: float  = 0.15
+    learning_rate_bilstm: float = 2e-4 # LR untuk BiLSTM & head (lebih besar)
+    num_epochs: int      = 15      # Lebih banyak epoch karena model lebih kompleks
+    early_stopping_patience = 3
+    warmup_ratio: float  = 0.1
     weight_decay: float  = 0.01
     dropout_rate: float  = 0.3
     gradient_clip: float = 1.0
@@ -115,7 +116,7 @@ class BiLSTMConfig:
     # ── Class Weights ─────────────────────────
     use_class_weights: bool = True
     aspect_loss_weight: float    = 1.0
-    sentiment_loss_weight: float = 1.5    # Sentimen lebih sulit → bobot lebih besar
+    sentiment_loss_weight: float = 1.3    # Sentimen lebih sulit → bobot lebih besar
 
 
 CFG = BiLSTMConfig()
@@ -624,20 +625,35 @@ def train(cfg: BiLSTMConfig = CFG) -> None:
         })
 
         # Simpan model terbaik
-        combined = (val_metrics["aspect_f1_macro"] + val_metrics["sentiment_f1_avg"]) / 2
-        if combined > best_val_f1:
-            best_val_f1 = combined
-            ckpt_path   = Path(cfg.model_dir) / "best_model_bilstm.pt"
-            torch.save({
-                "epoch"       : epoch,
-                "model_state" : model.state_dict(),
-                "optimizer"   : optimizer.state_dict(),
-                "val_f1"      : combined,
-                "config"      : vars(cfg),
-            }, ckpt_path)
-            tokenizer.save_pretrained(str(Path(cfg.model_dir) / "tokenizer_bilstm"))
-            logger.info(f"  → Checkpoint disimpan (combined F1 = {combined:.4f})")
+        model_dir = Path(cfg.model_dir)
+        model_dir.mkdir(parents=True, exist_ok=True)
 
+        combined = (val_metrics["aspect_f1_macro"] + val_metrics["sentiment_f1_avg"]) / 2
+
+       if combined > best_val_f1:
+           best_val_f1 = combined
+           ckpt_path = model_dir / "best_model_bilstm.pt"
+
+       # Simpan FULL checkpoint (untuk resume training)
+           torch.save({
+               "epoch": int(epoch),
+               "model_state_dict": model.state_dict(),
+               "optimizer_state_dict": optimizer.state_dict(),
+               "best_val_f1": float(combined),
+
+        # Kaggle-safe config (hindari pickle error)
+            "config": {k: str(v) for k, v in vars(cfg).items()}
+            }, ckpt_path)
+
+        # Simpan WEIGHTS ONLY (AMAN PyTorch 2.6+)
+            torch.save(
+               model.state_dict(),
+               model_dir / "best_model_weights_only.pt"
+            )
+       # Simpan tokenizer
+            tokenizer.save_pretrained(str(model_dir / "tokenizer_bilstm"))
+            logger.info(f"  → Checkpoint disimpan (combined F1 = {combined:.4f})")
+        
     # 10. Evaluasi final pada test set
     logger.info("\n" + "="*60)
     logger.info("EVALUASI FINAL — TEST SET")
