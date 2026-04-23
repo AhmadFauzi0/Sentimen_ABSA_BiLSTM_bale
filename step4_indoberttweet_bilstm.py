@@ -627,32 +627,25 @@ def train(cfg: BiLSTMConfig = CFG) -> None:
         # Simpan model terbaik
         model_dir = Path(cfg.model_dir)
         model_dir.mkdir(parents=True, exist_ok=True)
-
-        combined = (val_metrics["aspect_f1_macro"] + val_metrics["sentiment_f1_avg"]) / 2
-
-        if combined > best_val_f1:
+       # Simpan model terbaik
+       combined = (val_metrics["aspect_f1_macro"] + val_metrics["sentiment_f1_avg"]) / 2
+       
+       if combined > best_val_f1:
            best_val_f1 = combined
-           ckpt_path = model_dir / "best_model_bilstm.pt"
-
-       # Simpan FULL checkpoint (untuk resume training)
+       
+           ckpt_path = Path(cfg.model_dir) / "best_model_bilstm.pt"
+       
            torch.save({
-               "epoch": int(epoch),
+               "epoch": epoch,
                "model_state_dict": model.state_dict(),
                "optimizer_state_dict": optimizer.state_dict(),
                "best_val_f1": float(combined),
-
-        # Kaggle-safe config (hindari pickle error)
                "config": {k: str(v) for k, v in vars(cfg).items()}
-            }, ckpt_path)
-
-        # Simpan WEIGHTS ONLY (AMAN PyTorch 2.6+)
-            torch.save(
-               model.state_dict(),
-               model_dir / "best_model_weights_only.pt"
-            )
-       # Simpan tokenizer
-            tokenizer.save_pretrained(str(model_dir / "tokenizer_bilstm"))
-            logger.info(f"  → Checkpoint disimpan (combined F1 = {combined:.4f})")
+           }, ckpt_path)
+       
+           tokenizer.save_pretrained(str(Path(cfg.model_dir) / "tokenizer_bilstm"))
+       
+           logger.info(f"  → Checkpoint disimpan (combined F1 = {combined:.4f})")
         
     # 10. Evaluasi final pada test set
     logger.info("\n" + "="*60)
