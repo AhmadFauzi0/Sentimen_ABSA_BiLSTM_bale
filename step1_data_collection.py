@@ -16,6 +16,15 @@ import logging
 import pandas as pd
 from tqdm import tqdm
 from google_play_scraper import app, reviews, Sort
+import os
+
+# Definisikan path folder log
+log_dir = "/kaggle/working/logs"
+
+# Buat folder jika belum ada
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
+    print(f"Folder {log_dir} berhasil dibuat!")
 
 # ─────────────────────────────────────────────
 # KONFIGURASI
