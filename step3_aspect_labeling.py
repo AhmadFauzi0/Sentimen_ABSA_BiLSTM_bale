@@ -63,91 +63,152 @@ ANNOTATION_N    = 500   # Jumlah sampel untuk anotasi pakar
 ASPECT_KEYWORDS: Dict[str, List[str]] = {
 
     "EFFICIENCY": [
-        # Kemudahan dan kecepatan navigasi UI/UX
-        "mudah", "gampang", "simpel", "simple", "cepat", "praktis",
-        "intuitif", "responsif", "lancar", "ringan", "smooth",
-        "navigasi", "interface", "tampilan", "ui", "ux", "desain",
-        "fitur lengkap", "fitur bagus", "fitur keren",
-        "menu", "halaman", "layar", "tombol", "ikon",
-        "loading cepat", "buka cepat", "proses cepat",
-        "transfer mudah", "bayar mudah", "top up mudah",
-        "pengalaman baik", "pengalaman menyenangkan",
-        "nggak ribet", "tidak ribet", "tidak susah",
-        "user friendly", "friendly", "nyaman", "enak digunakan",
+        # UX/UI & kemudahan penggunaan
+        "mudah", "gampang", "simpel", "simple",
+        "praktis", "intuitif", "user friendly",
+        "navigasi mudah", "tidak ribet", "nggak ribet",
+        "tidak susah", "mudah digunakan",
+        "tampilan", "interface", "ui", "ux", "desain",
+        "menu", "halaman", "fitur mudah",
+        "enak digunakan", "nyaman digunakan",
+
+        # Kecepatan (UX-level, bukan system failure)
+        "cepat", "responsif", "lancar", "smooth",
+        "loading cepat", "buka cepat",
+        "proses cepat", "respon cepat",
     ],
 
     "SYSTEM_AVAILABILITY": [
-        # Ketersediaan dan stabilitas sistem
-        "error", "kesalahan", "down", "tidak bisa diakses",
-        "crash", "berhenti tiba-tiba", "force close", "keluar sendiri",
-        "server", "server mati", "maintenance", "pemeliharaan",
-        "lemot", "lambat", "lelet", "ngelag", "lag", "hang",
-        "loading lama", "loading terus", "loading tidak selesai",
-        "gagal", "tidak berhasil", "tidak berfungsi", "tidak bekerja",
-        "aplikasi mati", "tidak bisa dibuka", "tidak mau terbuka",
-        "koneksi", "timeout", "waktu habis", "sering gangguan",
-        "sering error", "sering bermasalah", "tidak stabil",
-        "update rusak", "setelah update", "versi baru bermasalah",
-        "tidak bisa login", "tidak bisa masuk",
+        # Error & crash
+        "error", "bug", "crash", "force close",
+        "keluar sendiri", "aplikasi mati",
+        "tidak bisa dibuka", "tidak bisa diakses",
+
+        # Kegagalan fungsi
+        "tidak bisa", "gagal", "tidak berfungsi",
+        "tidak bekerja", "tidak jalan",
+
+        # Kasus real user (PENTING)
+        "tidak bisa login", "gagal login",
+        "tidak bisa masuk", "login gagal",
+        "tidak bisa transfer", "gagal transfer",
+        "tidak bisa top up", "tidak bisa bayar",
+
+        # Loading & performa
+        "loading lama", "loading terus",
+        "tidak selesai", "stuck", "freeze",
+        "hang", "lag", "lemot", "lambat", "lelet",
+
+        # Server & koneksi
+        "server down", "server error",
+        "maintenance", "gangguan",
+        "koneksi", "timeout",
+
+        # Stabilitas
+        "sering error", "sering bermasalah",
+        "tidak stabil", "update bermasalah",
     ],
 
     "FULFILLMENT": [
-        # Pemenuhan janji layanan dan akurasi transaksi
-        "berhasil", "sukses", "transaksi berhasil",
-        "saldo", "saldo kepotong", "saldo berkurang",
-        "notifikasi", "pemberitahuan", "terima notifikasi",
-        "struk", "bukti transaksi", "riwayat transaksi",
-        "bayar", "pembayaran", "tagihan", "cicilan",
-        "tagihan berhasil", "bayar berhasil",
-        "kpr", "angsuran", "simulasi", "pengajuan",
-        "promo", "cashback", "poin", "reward", "hadiah",
-        "transfer berhasil", "kirim uang berhasil",
+        # Keberhasilan transaksi
+        "berhasil", "sukses",
+        "transaksi berhasil",
+        "transfer berhasil",
+        "pembayaran berhasil",
+
+        # Masalah transaksi (REAL DATA CRITICAL)
+        "uang tidak masuk",
+        "uang belum masuk",
+        "saldo tidak masuk",
+        "saldo berkurang",
+        "saldo terpotong",
+        "saldo kepotong",
+        "uang hilang",
+
+        # Notifikasi & bukti
+        "notifikasi", "pemberitahuan",
+        "bukti transaksi", "riwayat transaksi",
+
+        # Akurasi & keandalan
         "sesuai", "akurat", "tepat", "benar",
-        "fitur lengkap", "semua fitur ada",
-        "komunitas", "community", "bale community",
-        "pelayanan baik", "layanan memuaskan",
-        "responsif cs", "cs cepat", "customer service baik",
+
+        # Produk bank
+        "kpr", "angsuran", "tagihan", "cicilan",
+        "bayar tagihan",
+
+        # Reward
+        "promo", "cashback", "reward", "poin",
     ],
 
     "PRIVACY": [
-        # Keamanan data dan privasi transaksi
-        "aman", "keamanan", "privasi", "perlindungan",
-        "data", "data bocor", "kebocoran data", "data aman",
-        "otp", "kode otp", "otp tidak masuk", "otp gagal",
-        "pin", "pin salah", "pin tidak bisa", "ganti pin",
-        "biometrik", "sidik jari", "fingerprint", "wajah", "face id",
-        "verifikasi", "autentikasi", "autentikasi gagal",
-        "enkripsi", "ssl", "keamanan berlapis",
-        "mfa", "autentikasi dua faktor", "two factor",
-        "sso", "single sign on", "masuk otomatis",
-        "logout sendiri", "keluar sendiri", "sesi habis",
-        "akun dikunci", "akun terblokir", "pemblokiran",
-        "tidak aman", "khawatir", "curiga", "mencurigakan",
-        "phishing", "penipuan", "scam", "hacked", "diretas",
-        "password", "kata sandi", "ubah password",
+        # Keamanan umum
+        "aman", "keamanan", "privasi",
+        "perlindungan data",
+
+        # Risiko
+        "data bocor", "kebocoran data",
+        "tidak aman", "diretas", "hacked",
+        "penipuan", "scam", "phishing",
+
+        # Autentikasi
+        "otp", "kode otp",
+        "otp tidak masuk", "otp gagal",
+        "verifikasi", "autentikasi",
+
+        # Kredensial
+        "pin", "password", "kata sandi",
+        "ganti pin", "ubah password",
+
+        # Biometrik
+        "sidik jari", "fingerprint",
+        "face id", "pengenalan wajah",
+
+        # Session issue
+        "logout sendiri", "sesi habis",
+        "akun terkunci", "akun terblokir",
     ],
 }
 
 # Kata-kata sentimen umum bahasa Indonesia
 SENTIMENT_POSITIVE = [
-    "bagus", "baik", "mantap", "mantul", "keren", "jos", "luar biasa",
-    "hebat", "canggih", "suka", "senang", "puas", "memuaskan",
-    "sangat bagus", "sangat baik", "sangat membantu", "terima kasih",
-    "recommended", "rekomen", "bermanfaat", "berguna", "membantu",
-    "terbaik", "top", "oke", "ok", "good", "great", "excellent",
+    "bagus", "baik", "mantap", "keren",
+    "luar biasa", "hebat", "canggih",
+    "suka", "senang", "puas", "memuaskan",
+    "membantu", "berguna", "bermanfaat",
+    "terbaik", "recommended", "rekomen",
+    "top", "oke", "ok", "good", "great","excellent",
+
+    # intensifier
+    "sangat bagus", "sangat baik",
+    "sangat membantu", "sangat puas"
 ]
 
 SENTIMENT_NEGATIVE = [
-    "buruk", "jelek", "parah", "payah", "tidak bagus", "tidak baik",
-    "kecewa", "mengecewakan", "kesal", "marah", "frustrasi",
-    "sangat buruk", "sangat kecewa", "tidak puas",
-    "tidak bisa", "gagal", "masalah", "bermasalah", "trouble",
-    "sangat lambat", "sangat lemot", "tidak berguna",
-    "tidak recommend", "tidak rekomen", "minta perbaiki",
-    "harus diperbaiki", "segera diperbaiki", "mohon diperbaiki",
-    "bintang 1", "nilai jelek", "rating jelek",
-]
+    "buruk", "jelek", "parah", "payah",
+    "kecewa", "mengecewakan",
+    "kesal", "marah", "frustrasi",
+    "tidak puas",
 
+    # fungsi gagal
+    "tidak bisa", "gagal",
+    "error", "bermasalah", "trouble",
+
+    # performa
+    "lemot", "lambat", "loading lama",
+
+    # keluhan eksplisit
+    "tolong diperbaiki", "segera diperbaiki"
+    "mohon diperbaiki",
+    "harus diperbaiki",
+
+    # rating
+    "bintang 1", "rating jelek",
+
+    # frasa kuat
+    "tidak berguna",
+    "sangat buruk",
+    "sangat lambat", "tidak recommend", "tidak rekomen",
+]
 
 # ─────────────────────────────────────────────
 # KELAS LABELER ASPEK
