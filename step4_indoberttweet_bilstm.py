@@ -630,7 +630,7 @@ def train(cfg: BiLSTMConfig = CFG) -> None:
 
         combined = (val_metrics["aspect_f1_macro"] + val_metrics["sentiment_f1_avg"]) / 2
 
-       if combined > best_val_f1:
+        if combined > best_val_f1:
            best_val_f1 = combined
            ckpt_path = model_dir / "best_model_bilstm.pt"
 
@@ -642,7 +642,7 @@ def train(cfg: BiLSTMConfig = CFG) -> None:
                "best_val_f1": float(combined),
 
         # Kaggle-safe config (hindari pickle error)
-            "config": {k: str(v) for k, v in vars(cfg).items()}
+               "config": {k: str(v) for k, v in vars(cfg).items()}
             }, ckpt_path)
 
         # Simpan WEIGHTS ONLY (AMAN PyTorch 2.6+)
