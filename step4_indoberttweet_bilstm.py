@@ -628,24 +628,24 @@ def train(cfg: BiLSTMConfig = CFG) -> None:
         model_dir = Path(cfg.model_dir)
         model_dir.mkdir(parents=True, exist_ok=True)
        # Simpan model terbaik
-       combined = (val_metrics["aspect_f1_macro"] + val_metrics["sentiment_f1_avg"]) / 2
+        combined = (val_metrics["aspect_f1_macro"] + val_metrics["sentiment_f1_avg"]) / 2
        
-       if combined > best_val_f1:
-           best_val_f1 = combined
+        if combined > best_val_f1:
+            best_val_f1 = combined
        
-           ckpt_path = Path(cfg.model_dir) / "best_model_bilstm.pt"
+            ckpt_path = Path(cfg.model_dir) / "best_model_bilstm.pt"
        
-           torch.save({
-               "epoch": epoch,
-               "model_state_dict": model.state_dict(),
-               "optimizer_state_dict": optimizer.state_dict(),
-               "best_val_f1": float(combined),
-               "config": {k: str(v) for k, v in vars(cfg).items()}
-           }, ckpt_path)
+            torch.save({
+                "epoch": epoch,
+                "model_state_dict": model.state_dict(),
+                "optimizer_state_dict": optimizer.state_dict(),
+                "best_val_f1": float(combined),
+                "config": {k: str(v) for k, v in vars(cfg).items()}
+            }, ckpt_path)
        
-           tokenizer.save_pretrained(str(Path(cfg.model_dir) / "tokenizer_bilstm"))
+            tokenizer.save_pretrained(str(Path(cfg.model_dir) / "tokenizer_bilstm"))
        
-           logger.info(f"  → Checkpoint disimpan (combined F1 = {combined:.4f})")
+            logger.info(f"  → Checkpoint disimpan (combined F1 = {combined:.4f})")
         
     # 10. Evaluasi final pada test set
     logger.info("\n" + "="*60)
