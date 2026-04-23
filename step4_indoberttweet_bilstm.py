@@ -36,12 +36,12 @@ from typing import Dict, List, Tuple, Optional
 
 import torch
 import torch.nn as nn
+from torch.optim import AdamW
 from torch.utils.data import Dataset, DataLoader
 from transformers import (
     AutoTokenizer,
     AutoModel,
     get_cosine_schedule_with_warmup,  # Cosine lebih stabil dari linear
-    AdamW,
 )
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, classification_report
@@ -93,10 +93,10 @@ class BiLSTMConfig:
     bilstm_dropout: float = 0.3   # Dropout antar layer BiLSTM
 
     # ── Training ─────────────────────────────
-    batch_size: int      = 16     # Lebih kecil karena BiLSTM tambah memori
+    batch_size: int      = 32     # Lebih kecil karena BiLSTM tambah memori
     learning_rate_bert: float = 2e-5   # LR untuk layer BERT (lebih kecil)
     learning_rate_bilstm: float = 5e-4 # LR untuk BiLSTM & head (lebih besar)
-    num_epochs: int      = 8      # Lebih banyak epoch karena model lebih kompleks
+    num_epochs: int      = 10      # Lebih banyak epoch karena model lebih kompleks
     warmup_ratio: float  = 0.15
     weight_decay: float  = 0.01
     dropout_rate: float  = 0.3
